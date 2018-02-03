@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hello WebSocket</title>
+  <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/main.css" rel="stylesheet">
+  <script src="/webjars/jquery/jquery.min.js"></script>
+  <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+  <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+  <script src="/app.js"></script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+  enabled. Please enable
+  Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-md-5">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="connect">Connect?</label>
+          <input type="text" id="name" class="form-control" placeholder="Your name here...">
+          <button id="connect" class="btn btn-default" type="submit">Connect</button>
+          <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-7">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name">Say something?</label>
+          <input type="text" id="content" class="form-control" placeholder="want to say">
+        </div>
+        <button id="send" class="btn btn-default" type="submit" disabled="disabled">Send</button>
+        <div class="form-group">
+          <label for="name">TO :</label>
+          <input type="text" id="chanle" class="form-control" placeholder="lobby chat">
+        </div>
+      </form>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-md-2">
+      <table id="userlist" class="table table-striped">
+        <thead>
+        <tr>
+          <th>UserList(online)</th>
+        </tr>
+        </thead>
+        <tbody id="user">
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-5">
+      <table id="conversation" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Lobby chat</th>
+        </tr>
+        </thead>
+        <tbody id="lobby">
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-5">
+      <table id="privatechat" class="table table-striped">
+        <thead>
+        <tr>
+          <th>Private chat</th>
+        </tr>
+        </thead>
+        <tbody id="private">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
