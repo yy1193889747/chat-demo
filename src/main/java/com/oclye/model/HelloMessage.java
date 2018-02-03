@@ -11,4 +11,5 @@ public class HelloMessage {
 
   private String name;
   private String content;
+  private String receiver;
 }

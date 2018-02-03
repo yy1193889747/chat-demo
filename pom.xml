@@ -50,6 +50,12 @@
 			<scope>test</scope>
 		</dependency>
 
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.44</version>
+    </dependency>
+
     <!--静态资源-->
     <dependency>
       <groupId>org.webjars</groupId>
