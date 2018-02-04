@@ -3,7 +3,6 @@
 <head>
   <title>Hello WebSocket</title>
   <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/main.css" rel="stylesheet">
   <script src="/webjars/jquery/jquery.min.js"></script>
   <script src="/webjars/sockjs-client/sockjs.min.js"></script>
   <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -18,10 +17,10 @@
   <br/>
   <div class="row">
     <div class="col-md-5">
-      <form class="form-inline">
+      <form class="form-inline" action="/login" method="post">
         <div class="form-group">
           <label for="connect">Connect?</label>
-          <input type="text" id="name" class="form-control" placeholder="Your name here...">
+          <input type="text" name="username" id="username" class="form-control" placeholder="Your name here..." onfocus="this.value=''">
           <button id="connect" class="btn btn-default" type="submit">Connect</button>
           <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
           </button>
@@ -31,12 +30,12 @@
     <div class="col-md-7">
       <form class="form-inline">
         <div class="form-group">
-          <label for="name">Say something?</label>
+          <label>Say something?</label>
           <input type="text" id="content" class="form-control" placeholder="want to say">
         </div>
         <button id="send" class="btn btn-default" type="submit" disabled="disabled">Send</button>
         <div class="form-group">
-          <label for="name">TO :</label>
+          <label>TO :</label>
           <input type="text" id="touser" class="form-control" placeholder="lobby chat">
         </div>
       </form>
@@ -49,7 +48,7 @@
       <table id="userlist" class="table table-striped">
         <thead>
         <tr>
-          <th>UserList(online)</th>
+          <th>UserList (online)</th>
         </tr>
         </thead>
         <tbody id="user">
@@ -60,7 +59,7 @@
       <table id="conversation" class="table table-striped">
         <thead>
         <tr>
-          <th>Lobby chat</th>
+          <th id="lobbys">Lobby chat</th>
         </tr>
         </thead>
         <tbody id="lobby">
@@ -78,7 +77,6 @@
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 </body>

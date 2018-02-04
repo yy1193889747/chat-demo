@@ -1,17 +1,19 @@
 package com.oclye.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPObject;
 import com.oclye.config.WebSocketConfig;
 import com.oclye.model.Greeting;
 import com.oclye.model.HelloMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.config.WebSocketMessageBrokerStats;
 
 import java.util.Map;
 
@@ -22,16 +24,17 @@ import java.util.Map;
 @RestController
 public class GreetingController {
 
+  @Autowired
   private SimpMessagingTemplate template;
 
   @Autowired
   WebSocketConfig webSocketConfig;
 
-  @Autowired
-  public GreetingController(SimpMessagingTemplate template) {
-    this.template = template;
+  @GetMapping("/userlist")
+  public JSONObject getUserlist(){
+    JSONObject users = webSocketConfig.users;
+    return users;
   }
-
   @MessageMapping("/hello")
   @SendTo("/topic/greetings")
   public Greeting greeting(HelloMessage message) throws Exception {
@@ -40,22 +43,24 @@ public class GreetingController {
     return new Greeting("【"+message.getName()+"】：" + message.getContent() + "");
   }
 
-  @MessageMapping("/userlist")
-  @SendTo("/topic/userlist")
-  public Greeting userList() throws Exception {
-    Thread.sleep(1000);
-    System.out.println("userlist");
-    Map<String, String> users = webSocketConfig.users;
-    System.out.println(users.toString());
-    return new Greeting(users.toString());
-  }
-
   @MessageMapping("/private")
   @SendToUser("/topic/private")
+  public Greeting privatechat(HelloMessage message ,@Header("simpSessionId") String sessionId) throws Exception {
+    System.out.println(sessionId);
+    Thread.sleep(1000);
+    String content ="【"+message.getName()+"】对你说：" + message.getContent();
+    String contents ="你对【"+ message.getReceiver() +"】说："+ message.getContent();
+    System.out.println(message.getReceiver());
+    template.convertAndSendToUser(message.getReceiver(),"/topic/private",new Greeting(content));
+    return new Greeting(contents);
+  }
+/*  @MessageMapping("/private")
+  @SendToUser(value = "/topic/private")
   public Greeting privatechat(HelloMessage message) throws Exception {
+
     System.out.println(message.getName());
     Thread.sleep(1000);
     String content ="【"+message.getName()+"】对你说：" + message.getContent();
     return new Greeting(content);
-  }
+  }*/
 }
