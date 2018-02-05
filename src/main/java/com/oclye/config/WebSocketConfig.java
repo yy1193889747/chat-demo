@@ -1,9 +1,7 @@
 package com.oclye.config;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPObject;
 import com.oclye.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +27,6 @@ import org.springframework.web.socket.handler.WebSocketHandlerDecoratorFactory;
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
   public JSONObject users =new JSONObject();
-
 
   @Autowired
   private SimpMessagingTemplate template;
@@ -74,7 +71,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
             user.setId(session.getId());
             user.setOnline(false);
             template.convertAndSend("/topic/userlist", JSON.toJSON(user));
-            System.out.println(session.getUri());
             System.out.println("断开连接: " + session.getId());
             super.afterConnectionClosed(session, closeStatus);
           }

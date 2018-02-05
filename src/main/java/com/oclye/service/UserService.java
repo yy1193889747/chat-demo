@@ -1,6 +1,7 @@
 package com.oclye.service;
 
 import com.oclye.model.User;
+import com.oclye.model.UserPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,10 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
 
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    User user = new User();
+    UserPrincipal user = new UserPrincipal(username,"",null);
     user.setName(username);
     return user;
 	}
