@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Hello WebSocket</title>
+  <meta charset="utf-8">
   <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <script src="/webjars/jquery/jquery.min.js"></script>
   <script src="/webjars/sockjs-client/sockjs.min.js"></script>
@@ -19,10 +20,10 @@
     <div class="col-md-5">
       <form class="form-inline" action="/login" method="post">
         <div class="form-group">
-          <label for="connect">Connect?</label>
-          <input type="text" name="username" id="username" class="form-control" placeholder="Your name here..." onfocus="this.value=''">
-          <button id="connect" class="btn btn-default" type="submit">Connect</button>
-          <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Disconnect
+          <label for="connect">连接?</label>
+          <input type="text" name="username" id="username" class="form-control" placeholder="取个名字呗" onfocus="this.value=''">
+          <button id="connect" class="btn btn-default" type="submit">连接</button>
+          <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">断开连接
           </button>
         </div>
       </form>
@@ -30,13 +31,12 @@
     <div class="col-md-7">
       <form class="form-inline">
         <div class="form-group">
-          <label>Say something?</label>
-          <input type="text" id="content" class="form-control" placeholder="want to say">
+          <label>说点什么吧</label>
+
         </div>
-        <button id="send" class="btn btn-default" type="submit" disabled="disabled">Send</button>
         <div class="form-group">
-          <label>TO :</label>
-          <input type="text" id="touser" class="form-control" placeholder="lobby chat">
+          <label>发送到 :</label>
+          <input type="text" id="touser" class="form-control" placeholder="默认大厅，单击在线用户" disabled="disabled">
         </div>
       </form>
     </div>
@@ -48,7 +48,7 @@
       <table id="userlist" class="table table-striped">
         <thead>
         <tr>
-          <th>UserList (online)</th>
+          <th>在线用户</th>
         </tr>
         </thead>
         <tbody id="user">
@@ -59,23 +59,39 @@
       <table id="conversation" class="table table-striped">
         <thead>
         <tr>
-          <th id="lobbys">Lobby chat</th>
+          <th id="lobbys">大厅聊天 （单击此处切换为大厅）</th>
         </tr>
         </thead>
-        <tbody id="lobby">
+        <tbody id="lobby" style="height:350px; overflow-y:auto; display:block">
         </tbody>
       </table>
+      <div class="input-group" style="height: 74px">
+        <textarea id="content" class="form-control" rows="3" style="resize: none;" placeholder="说点什么吧...."></textarea>
+        <span class="input-group-btn">
+        <button id="send" class="btn btn-default" type="submit" disabled="disabled" style="height: 100%">发送</button>
+        </span>
+      </div>
     </div>
     <div class="col-md-5">
       <table id="privatechat" class="table table-striped">
         <thead>
         <tr>
-          <th>Private chat</th>
+          <th id="privateuser">私信聊天</th>
         </tr>
         </thead>
-        <tbody id="private">
+        <tbody id="private" style="height:300px; overflow-y:auto; display:block">
         </tbody>
       </table>
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">发送到：</span>
+        <input type="text" id="tousers" class="form-control" placeholder="默认大厅，单击在线用户" disabled="disabled" aria-describedby="basic-addon1">
+      </div>
+      <div class="input-group" style="height: 74px">
+        <textarea id="contents" class="form-control" rows="3" style="resize: none;" placeholder="说点什么吧...."></textarea>
+        <span class="input-group-btn">
+        <button id="sends" class="btn btn-default" type="submit" disabled="disabled" style="height: 100%">发送</button>
+        </span>
+      </div>
     </div>
   </div>
 </div>

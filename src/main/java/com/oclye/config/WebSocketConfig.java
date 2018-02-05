@@ -17,6 +17,9 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 import org.springframework.web.socket.handler.WebSocketHandlerDecorator;
 import org.springframework.web.socket.handler.WebSocketHandlerDecoratorFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  * @author ocly
@@ -48,7 +51,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
       @Override
       public WebSocketHandler decorate(final WebSocketHandler handler) {
         return new WebSocketHandlerDecorator(handler) {
-          JSONObject jsonObject =new JSONObject();
           @Override
           public void afterConnectionEstablished(final WebSocketSession session) throws Exception {
             users.put(session.getId(), session.getPrincipal().getName());
@@ -64,7 +66,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
           @Override
           public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus)
             throws Exception {
-            System.out.println(jsonObject.toString());
             users.remove(session.getId());
             User user = new User();
             user.setName(session.getPrincipal().getName());

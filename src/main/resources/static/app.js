@@ -16,7 +16,7 @@ function setConnected(connected) {
 function login() {
   var name = $("#username").val();
   if(name.trim() ===''){
-    $("#username").val('!!name not null');
+    $("#username").val('用户名不能为空');
     return;
   }
 
@@ -37,9 +37,6 @@ function connect() {
     setConnected(true);
     sessionId = /\/([^\/]+)\/websocket/.exec(socket._transport.url)[1];
     showUser($("#username").val(),sessionId);
-    console.log("connected, session id: " + sessionId);
-    console.log('Connected: ' + frame);
-    console.log($("#user").html());
     stompClient.subscribe('/topic/greetings', function (greeting) {
       showGreeting(JSON.parse(greeting.body).content);
     });
@@ -51,7 +48,7 @@ function connect() {
       if(parse.online){
         showUser(parse.name,parse.id);
       }else{
-        removeUser(parse.name,parse.id);
+        removeUser(parse.id);
       }
     });
   });
@@ -61,7 +58,7 @@ function disconnect() {
   if (stompClient !== null) {
     stompClient.disconnect();
   }
-  removeUser($("#username").val(),sessionId);
+  removeUser(sessionId);
   setConnected(false);
   console.log("Disconnected");
 }
@@ -80,20 +77,21 @@ function sendName() {
   }
 }
 function touser(message) {
-  $("#touser").val(message.textContent);
+  $("#privateuser").html("私信聊天 与" + message.textContent);
 }
 
 function showGreeting(message) {
-  $("#lobby").prepend("<tr><td>" + message + "</td></tr>");
+  $("#lobby").append("<tr><td>" + message + "</td></tr>");
+  var div = document.getElementById('lobby');
+  div.scrollTop = div.scrollHeight;
 }
 function showMessage(message) {
-  $("#private").prepend("<tr><td>" + message + "</td></tr>");
+  $("#private").append("<tr><td>" + message + "</td></tr>");
 }
 function showUser(user,id) {
-  $("#user").prepend("<tr id="+id+" onclick='javascript:touser(this)'><td>" + user + "</td></tr>");
+  $("#user").append("<tr id="+id+" onclick='javascript:touser(this)'><td>" + user +"</td></tr>");
 }
-function removeUser(user,id) {
-  console.log($("#user").html());
+function removeUser(id) {
   $("tr").remove("#"+id);
 }
 
@@ -115,4 +113,8 @@ $(function () {
   $( "#disconnect" ).click(function() { disconnect(); });
   $( "#send" ).click(function() { sendName(); });
   $( "#lobbys" ).click(function() {  $("#touser").val(''); });
+});
+$(document).ready(function(){
+  var div = document.getElementById('lobby');
+  div.scrollTop = div.scrollHeight;
 });

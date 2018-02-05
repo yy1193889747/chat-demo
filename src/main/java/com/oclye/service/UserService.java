@@ -2,10 +2,15 @@ package com.oclye.service;
 
 import com.oclye.model.User;
 import com.oclye.model.UserPrincipal;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,7 +22,9 @@ public class UserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    UserPrincipal user = new UserPrincipal(username,"",null);
+    List<GrantedAuthority> authorities = new ArrayList<>();
+    authorities.add(new SimpleGrantedAuthority("USER"));
+    UserPrincipal user = new UserPrincipal(username,"",authorities);
     user.setName(username);
     return user;
 	}
