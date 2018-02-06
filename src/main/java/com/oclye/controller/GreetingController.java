@@ -83,34 +83,4 @@ public class GreetingController {
 
 
   }
-/*  @MessageMapping("/private")
-  @SendToUser(value = "/topic/private")
-  public Greeting privatechat(HelloMessage message) throws Exception {
-
-    System.out.println(message.getName());
-    Thread.sleep(1000);
-    String content ="【"+message.getName()+"】对你说：" + message.getContent();
-    return new Greeting(content);
-  }*/
-
-public static void main(String[] args) throws IOException {
-    //{
-/*  "key": "3a7b16679207452dbed9bae8a1b3dd32",
-    "info": "你叫什么名字",
-    "userid":"12345678"
-}*/
-
-  String c = "nihao";
-  String userid = "123123";
-  String url = "http://www.tuling123.com/openapi/api";
-  String post = "{\"key\": \"3a7b16679207452dbed9bae8a1b3dd32\",\"info\": \""+c+"\",\"userid\":\""+userid+"\"}";
-  String body = Jsoup.connect(url).method(Connection.Method.POST)
-    .requestBody(post)
-    .header("Content-Type", "application/json; charset=utf-8")
-    .ignoreContentType(true).execute().body();
-
-  System.out.println(JSONObject.parseObject(body).getString("text"));
-  System.out.println(body);
-
-}
 }
