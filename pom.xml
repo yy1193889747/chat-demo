@@ -64,6 +64,13 @@
       <artifactId>spring-boot-starter-undertow</artifactId>
     </dependency>
 
+
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.11.2</version>
+    </dependency>
+
     <!--静态资源-->
     <dependency>
       <groupId>org.webjars</groupId>

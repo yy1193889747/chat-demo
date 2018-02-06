@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     String onlinuser = webSocketConfig.users.toString();
-    if (onlinuser.contains(username)) {
+    if (onlinuser.contains(username)||"机器人".equals(username)) {
       throw new UsernameNotFoundException("用户已存在");
     }
     List<GrantedAuthority> authorities = new ArrayList<>();

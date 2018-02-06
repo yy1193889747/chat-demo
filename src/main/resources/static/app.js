@@ -99,6 +99,8 @@ function showGreeting(message) {
 }
 function showMessage(message) {
   $("#private").append("<tr><td>" + message + "</td></tr>");
+  var div = document.getElementById('private');
+  div.scrollTop = div.scrollHeight;
 }
 function showUser(user,id) {
   $("#user").append("<tr id="+id+" onclick='javascript:touser(this)'><td>" + user +"</td></tr>");
