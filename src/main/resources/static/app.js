@@ -15,8 +15,8 @@ function setConnected(connected) {
 }
 
 function login() {
-  var name = $("#username").val();
-  if(name.trim() ===''){
+  var name = $("#username").val().trim();
+  if(name ===''){
     $("#username").val('用户名不能为空');
     return;
   }
@@ -24,7 +24,7 @@ function login() {
   $.ajax({
     type: "POST",
     url: "/login",
-    data: {username:$("#username").val()},
+    data: {username:name},
     success: function () {
       connect();
     },
