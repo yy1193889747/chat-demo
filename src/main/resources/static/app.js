@@ -7,6 +7,7 @@ function setConnected(connected) {
   $("#connect").prop("disabled", connected);
   $("#disconnect").prop("disabled", !connected);
   $("#send").prop("disabled", !connected);
+  $("#sendtouser").prop("disabled", !connected);
   $("#username").prop("disabled", connected);
   if (!connected) {
     $("#lobby").html("");
@@ -24,8 +25,11 @@ function login() {
     type: "POST",
     url: "/login",
     data: {username:$("#username").val()},
-    success: function(data){
+    success: function () {
       connect();
+    },
+    error: function () {
+      $("#username").val('重名了');
     }
   });
 }
@@ -64,20 +68,28 @@ function disconnect() {
 }
 
 function sendName() {
-  var context = $("#content").val();
-  var touser = $("#touser").val();
-  if(context.trim()===''){
-    return
+  var content = $("#content").val();
+  if(content.trim()===''){
+    return;
   }
-  if(touser.trim()!==''){
-    stompClient.send("/app/private", {}, JSON.stringify({'name': $("#username").val(),'content': $("#content").val(),'receiver': $("#touser").val()}));
-  }else{
-  stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#username").val(),'content': $("#content").val()}));
+  stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#username").val(),'content': content}));
   $("#content").val('');
+}
+function sendToUser() {
+  var touser = $("#privateuser").html();
+  var patt1 = new RegExp(/【(.*?)】/g);
+  var tousername = patt1.exec($("#privateuser").html())[1];
+  var content = $("#contentuser").val();
+  if(content.trim()===''){
+    return;
+  }
+  if (touser.trim() !== '私信聊天') {
+    stompClient.send("/app/private", {}, JSON.stringify({'name': $("#username").val(), 'content': content, 'receiver': tousername}));
+    $("#contentuser").val('');
   }
 }
 function touser(message) {
-  $("#privateuser").html("私信聊天 与" + message.textContent);
+  $("#privateuser").html("私信聊天 与 【" + message.textContent + "】");
 }
 
 function showGreeting(message) {
@@ -112,7 +124,7 @@ $(function () {
   $( "#connect" ).click(function() { login(); });
   $( "#disconnect" ).click(function() { disconnect(); });
   $( "#send" ).click(function() { sendName(); });
-  $( "#lobbys" ).click(function() {  $("#touser").val(''); });
+  $( "#sendtouser" ).click(function() { sendToUser(); });
 });
 $(document).ready(function(){
   var div = document.getElementById('lobby');

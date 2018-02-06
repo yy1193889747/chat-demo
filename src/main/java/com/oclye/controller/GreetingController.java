@@ -44,10 +44,11 @@ public class GreetingController {
   @MessageMapping("/hello")
   @SendTo("/topic/greetings")
   public Greeting greeting(HelloMessage message) throws Exception {
-    System.out.println(message.getName());
-    Thread.sleep(1000);
     String date = simpleDateFormat.format(new Date());
-    return new Greeting(date+"【"+message.getName()+"】说：" + message.getContent() + "");
+    String content = date + "【" + message.getName() + "】说：" + message.getContent();
+    System.out.println(content);
+    Thread.sleep(1000);
+    return new Greeting(content);
   }
 
   @MessageMapping("/private")
@@ -56,8 +57,7 @@ public class GreetingController {
     Thread.sleep(1000);
     String content =date+"【"+message.getName()+"】对你说：" + message.getContent();
     String contents =date+" 你对【"+ message.getReceiver() +"】说："+ message.getContent();
-    System.out.println(message.getReceiver());
-    template.convertAndSendToUser(message.getName(),"/topic/private",new Greeting(content));
+    template.convertAndSendToUser(message.getName(),"/topic/private",new Greeting(contents));
     template.convertAndSendToUser(message.getReceiver(),"/topic/private",new Greeting(content));
   }
 /*  @MessageMapping("/private")

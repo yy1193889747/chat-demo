@@ -17,26 +17,14 @@
   <br/>
   <br/>
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-md-10">
       <form class="form-inline" action="/login" method="post">
         <div class="form-group">
-          <label for="connect">连接?</label>
-          <input type="text" name="username" id="username" class="form-control" placeholder="取个名字呗" onfocus="this.value=''">
-          <button id="connect" class="btn btn-default" type="submit">连接</button>
+          <label for="connect">用户名：</label>
+          <input type="text" name="username" id="username" class="form-control" placeholder="取个独特的名字呗" onfocus="this.value=''">
+          <button id="connect" class="btn btn-default" type="submit">建立连接</button>
           <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">断开连接
           </button>
-        </div>
-      </form>
-    </div>
-    <div class="col-md-7">
-      <form class="form-inline">
-        <div class="form-group">
-          <label>说点什么吧</label>
-
-        </div>
-        <div class="form-group">
-          <label>发送到 :</label>
-          <input type="text" id="touser" class="form-control" placeholder="默认大厅，单击在线用户" disabled="disabled">
         </div>
       </form>
     </div>
@@ -45,21 +33,21 @@
   <br/>
   <div class="row">
     <div class="col-md-2">
-      <table id="userlist" class="table table-striped">
+      <table id="userlist" class="table">
         <thead>
         <tr>
           <th>在线用户</th>
         </tr>
         </thead>
-        <tbody id="user">
+        <tbody id="user" style="height:350px; overflow-y:auto; display:block">
         </tbody>
       </table>
     </div>
     <div class="col-md-5">
-      <table id="conversation" class="table table-striped">
+      <table id="conversation" class="table">
         <thead>
         <tr>
-          <th id="lobbys">大厅聊天 （单击此处切换为大厅）</th>
+          <th id="lobbys">大厅聊天</th>
         </tr>
         </thead>
         <tbody id="lobby" style="height:350px; overflow-y:auto; display:block">
@@ -73,23 +61,19 @@
       </div>
     </div>
     <div class="col-md-5">
-      <table id="privatechat" class="table table-striped">
+      <table id="privatechat" class="table">
         <thead>
         <tr>
           <th id="privateuser">私信聊天</th>
         </tr>
         </thead>
-        <tbody id="private" style="height:300px; overflow-y:auto; display:block">
+        <tbody id="private" style="height:350px; overflow-y:auto; display:block">
         </tbody>
       </table>
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">发送到：</span>
-        <input type="text" id="tousers" class="form-control" placeholder="默认大厅，单击在线用户" disabled="disabled" aria-describedby="basic-addon1">
-      </div>
       <div class="input-group" style="height: 74px">
-        <textarea id="contents" class="form-control" rows="3" style="resize: none;" placeholder="说点什么吧...."></textarea>
+        <textarea id="contentuser" class="form-control" rows="3" style="resize: none;" placeholder="单击一名在线用户，与其聊天吧...." ></textarea>
         <span class="input-group-btn">
-        <button id="sends" class="btn btn-default" type="submit" disabled="disabled" style="height: 100%">发送</button>
+        <button id="sendtouser" class="btn btn-default" type="submit" disabled="disabled" style="height: 100%">发送</button>
         </span>
       </div>
     </div>
