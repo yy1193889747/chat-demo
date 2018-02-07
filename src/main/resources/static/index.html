@@ -34,8 +34,8 @@
   <br/><br/>
   <div class="row">
     <div class="col-md-2">
-      <table id="userlist" class="table" onclick='javascript:hidetbody(this)'>
-        <thead>
+      <table id="userlist" class="table">
+        <thead onclick='javascript:hidetuser()'>
         <tr>
           <th>在线用户</th>
         </tr>
@@ -46,8 +46,8 @@
       </table>
     </div>
     <div class="col-md-5">
-      <table id="conversation" class="table" onclick='javascript:hidetbody(this)'>
-        <thead>
+      <table id="conversation" class="table">
+        <thead onclick='javascript:hidetlobby()'>
         <tr>
           <th id="lobbys">大厅聊天   (单击收起/展开)</th>
         </tr>
@@ -63,8 +63,8 @@
       </div>
     </div>
     <div class="col-md-5">
-      <table id="privatechat" class="table" onclick='javascript:hidetbody(this)'>
-        <thead>
+      <table id="privatechat" class="table">
+        <thead onclick='javascript:hidetprivate()'>
         <tr>
           <th id="privateuser">私信聊天</th>
         </tr>

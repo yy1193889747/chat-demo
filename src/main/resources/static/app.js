@@ -108,13 +108,29 @@ function touser(message) {
   $(".msg-" + message.textContent).prop("hidden", false);
 }
 
-function hidetbody(e){
-  if($("#"+e.id+" tbody").is(":hidden")){
-    $("#"+e.id+" tbody").show();
-    $("#"+e.id+" +div").show();
+function hidetlobby(){
+  if($("#lobby").is(":hidden")){
+    $("#lobby").show();
+    $("#conversation +div").show();
   }else{
-    $("#"+e.id+" tbody").hide();
-    $("#"+e.id+" +div").hide();
+    $("#lobby").hide();
+    $("#conversation +div").hide();
+  }
+}
+function hidetprivate(){
+  if($("#private").is(":hidden")){
+    $("#private").show();
+    $("#privatechat +div").show();
+  }else{
+    $("#private").hide();
+    $("#privatechat +div").hide();
+  }
+}
+function hidetuser(){
+  if($("#user").is(":hidden")){
+    $("#user").show();
+  }else{
+    $("#user").hide();
   }
 }
 function showGreeting(message) {
