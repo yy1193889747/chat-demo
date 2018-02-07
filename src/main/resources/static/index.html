@@ -39,8 +39,8 @@
           <th>在线用户</th>
         </tr>
         </thead>
-        <tbody id="user" style="height:350px; overflow-y:auto; display:block">
-        <tr onclick='javascript:touser(this)'><td>机器人</td></tr>
+        <tbody id="user" style="height:350px; overflow-y:auto;">
+        <tr onclick='javascript:touser(this)' id="robbot" class="机器人"><td>机器人<span class="badge pull-right">1</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -69,6 +69,7 @@
         </tr>
         </thead>
         <tbody id="private" style="height:350px; overflow-y:auto; display:block; ">
+        <tr class="msg-机器人" hidden><td>00-00 00:00【机器人】对你说：欢迎你来到ocly的聊天室</td></tr>
         </tbody>
       </table>
       <div class="input-group" style="height: 74px">

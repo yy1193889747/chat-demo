@@ -1,36 +1,27 @@
 package com.oclye.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPObject;
 import com.oclye.config.WebSocketConfig;
-import com.oclye.model.Greeting;
-import com.oclye.model.HelloMessage;
-import lombok.experimental.var;
+import com.oclye.model.ChatMessage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
-import java.util.logging.SimpleFormatter;
 
 /**
  * @author ocly
  * @date 2018/2/2 15:42
  */
 @RestController
-public class GreetingController {
+public class ChatController {
 
   private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd HH:mm");
 
@@ -47,16 +38,17 @@ public class GreetingController {
   }
   @MessageMapping("/hello")
   @SendTo("/topic/greetings")
-  public Greeting greeting(HelloMessage message) throws Exception {
+  public ChatMessage greeting(ChatMessage message) throws Exception {
     String date = simpleDateFormat.format(new Date());
     String content = date + "【" + message.getName() + "】说：" + message.getContent();
-    System.out.println(content);
+    message.setDate(date);
+    message.setContent(content);
     Thread.sleep(1000);
-    return new Greeting(content);
+    return message;
   }
 
   @MessageMapping("/private")
-  public void privatechat(HelloMessage message) throws Exception {
+  public void privatechat(ChatMessage message) throws Exception {
 
     String ctx = message.getContent();
     String userid = message.getName();
@@ -66,7 +58,7 @@ public class GreetingController {
     String content =date+"【"+userid+"】对你说：" + ctx;
     String contents =date+" 你对【"+ touser +"】说："+ ctx;
 
-    template.convertAndSendToUser(userid,"/topic/private",new Greeting(contents));
+    template.convertAndSendToUser(userid,"/topic/private",new ChatMessage(touser,contents,touser,date));
     Thread.sleep(1000);
     if("机器人".equals(touser)){
       touser = userid;
@@ -78,6 +70,8 @@ public class GreetingController {
         .ignoreContentType(true).execute().body();
       String text = JSONObject.parseObject(body).getString("text");
       content =date+"【机器人】对你说：" + text;
+      template.convertAndSendToUser(touser,"/topic/private",new ChatMessage("机器人",content,"机器人",date));
+      return;
     }
     if("情感分析".equals(touser)){
       touser = userid;
@@ -90,7 +84,7 @@ public class GreetingController {
       String text = JSONObject.parseObject(body).getString("text");
       content =date+"【机器人】对你说：" + text;
     }
-    template.convertAndSendToUser(touser,"/topic/private",new Greeting(content));
+    template.convertAndSendToUser(touser,"/topic/private",new ChatMessage(userid,content,userid,date));
 
 
   }
