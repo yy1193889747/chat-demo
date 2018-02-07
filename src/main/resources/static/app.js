@@ -4,14 +4,16 @@
 var stompClient = null;
 var sessionId = null;
 function setConnected(connected) {
+  $("#connect").html('连接');
+  if (connected) {
+    $("#connect").html('成功');
+  }
   $("#connect").prop("disabled", connected);
   $("#disconnect").prop("disabled", !connected);
   $("#send").prop("disabled", !connected);
   $("#sendtouser").prop("disabled", !connected);
   $("#username").prop("disabled", connected);
-  if (!connected) {
-    $("#lobby").html("");
-  }
+
 }
 
 function login() {
@@ -106,6 +108,13 @@ function touser(message) {
   $(".msg-" + message.textContent).prop("hidden", false);
 }
 
+function hidetbody(e){
+  if($("#"+e.id+" tbody").is(":hidden")){
+    $("#"+e.id+" tbody").show();
+  }else{
+    $("#"+e.id+" tbody").hide();
+  }
+}
 function showGreeting(message) {
   $("#lobby").append("<tr><td>" + message + "</td></tr>");
   var div = document.getElementById('lobby');
