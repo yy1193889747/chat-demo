@@ -111,8 +111,10 @@ function touser(message) {
 function hidetbody(e){
   if($("#"+e.id+" tbody").is(":hidden")){
     $("#"+e.id+" tbody").show();
+    $("#"+e.id+" +div").show();
   }else{
     $("#"+e.id+" tbody").hide();
+    $("#"+e.id+" +div").hide();
   }
 }
 function showGreeting(message) {

@@ -1,8 +1,7 @@
 # springboot-websocket-chat
 ## [演示地址](http://111.231.86.225:8888/)
-# 前言
 
-* css选择兄弟元素
+* css选择兄弟元素 table +div
 ```
 <script>
   function hidetbody(e){
