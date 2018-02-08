@@ -63,7 +63,8 @@ public class ChatController {
     if("机器人".equals(touser)){
       touser = userid;
       String url = "http://www.tuling123.com/openapi/api";
-      String post = "{\"key\": \"3a7b16679207452dbed9bae8a1b3dd32\",\"info\": \""+ctx+"\",\"userid\":\""+userid+"\"}";
+      //请填写自己的key
+      String post = "{\"key\": \"\",\"info\": \""+ctx+"\",\"userid\":\""+userid+"\"}";
       String body = Jsoup.connect(url).method(Connection.Method.POST)
         .requestBody(post)
         .header("Content-Type", "application/json; charset=utf-8")
@@ -73,34 +74,9 @@ public class ChatController {
       template.convertAndSendToUser(touser,"/topic/private",new ChatMessage("机器人",content,"机器人",date));
       return;
     }
-    if("情感分析".equals(touser)){
-      touser = userid;
-      String url = "https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?access_token=24.0b1b34dd623026d53c7613b25ac0594d.2592000.1519900456.282335-10770393";
-      String post = "{\"text\": \""+ctx+"\"}";
-      String body = Jsoup.connect(url).method(Connection.Method.POST)
-        .requestBody(post)
-        .header("Content-Type", "application/json; charset=utf-8")
-        .ignoreContentType(true).execute().body();
-      String text = JSONObject.parseObject(body).getString("text");
-      content =date+"【机器人】对你说：" + text;
-    }
     template.convertAndSendToUser(touser,"/topic/private",new ChatMessage(userid,content,userid,date));
 
 
   }
   public static void main(String[] args) throws IOException {
-/*    String url = "https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=YdirUBPrx8sF4LQthH1D6Obe&client_secret=aYhfrY7FuBcrhHiG5bMTdaGEPkhyKnT2&";
-    String body = Jsoup.connect(url).ignoreContentType(true).execute().body();
-    JSONObject jsonObject = JSONObject.parseObject(body);
-    System.out.println(body);*/
-
-    String context = new String("爱你啊你啊你".getBytes("GBK"), "GBK");
-    String url = "https://aip.baidubce.com/rpc/2.0/nlp/v1/sentiment_classify?access_token=24.68ad3571d82c8f9eb6f7a16ae9608f89.2592000.1520499693.282335-10802209";
-    String post = "{\"text\": \""+context+"\"}";
-    String body = Jsoup.connect(url).method(Connection.Method.POST)
-      .requestBody(post)
-      .header("Content-Type", "application/json; charset=utf-8")
-      .ignoreContentType(true).execute().body();
-    System.out.println(body);
-  }
 }
