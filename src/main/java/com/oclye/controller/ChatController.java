@@ -78,5 +78,4 @@ public class ChatController {
 
 
   }
-  public static void main(String[] args) throws IOException {
 }
